@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include  # < вот тут подключаем представления
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,3 +23,10 @@ urlpatterns = [
     # подключались к главному приложению с префиксом products/.
     path('products/', include('simpleapp.urls')),
 ]
+
+"""Не забудьте изменить настройки в settings.py:
+    ~ Добавить ваше новое приложение в список INSTALLED_APPS.
+    ~ Обновить настройку TEMPLATES.
+    ~ Добавить список STATICFILES_DIRS.
+Мы уже проходили эти настройки в юнитах D1.3 и D1.5.
+"""

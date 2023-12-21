@@ -1,5 +1,6 @@
 from django import template
 
+# Library: класс для регистрации тэгов и фильтров
 register = template.Library()
 
 CURRENCIES_SYMBOLS = {
@@ -11,7 +12,8 @@ CURRENCIES_SYMBOLS = {
 # Регистрируем наш фильтр под именем currency, чтоб Django понимал,
 # что это именно фильтр для шаблонов, а не простая функция.
 @register.filter()
-# @register.filter(name='currency_rub')
+# по умолчанию имя фильтра носит название функции
+# @register.filter(name='currency_rub'): так можно задать имя фильтра ('currency_rub')
 def currency(value, code='rub'):
     """
     value: значение, к которому нужно применить фильтр

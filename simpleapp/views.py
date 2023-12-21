@@ -1,9 +1,12 @@
 # Импортируем класс, который говорит нам о том,
 # что в этом представлении мы будем выводить список объектов из БД
 from datetime import datetime
+
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Product, Category  # Дополнительно импортируем категорию, чтобы пользователь мог её выбрать
+# Дополнительно импортируем категорию, чтобы пользователь мог её выбрать
+from .models import Product, Category
 from pprint import pprint
+
 # from D7
 from django.shortcuts import render
 from django.views import View  # импортируем простую вьюшку
@@ -18,16 +21,19 @@ class ProductsList(ListView):
     model = Product
     # Поле, которое будет использоваться для сортировки объектов
     ordering = '-price'
+
     # Фильтр по цене + сортировка по имени
     # queryset = Product.objects.filter(price__gt=100).order_by(
     #     '-name'
     # )
+
     # Указываем имя шаблона, в котором будут все инструкции о том,
     # как именно пользователю должны быть показаны наши объекты
     template_name = 'products.html'
-    # Это имя списка, в котором будут лежать все объекты.
+
+    # Это имя списка, в котором будут лежать все объекты ('products').
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
-    context_object_name = 'products'
+    context_object_name = 'products'  # по умолчанию носит имя 'object_list'
     paginate_by = 2  # поставим постраничный вывод в один элемент
 
     # form_class = ProductForm  # добавляем форм класс, чтобы получать доступ к форме через метод POST
@@ -36,11 +42,11 @@ class ProductsList(ListView):
     def get_context_data(self, **kwargs):
         # С помощью super() мы обращаемся к родительским классам
         # и вызываем у них метод get_context_data с теми же аргументами,
-        # что и были переданы нам.
-        # В ответе мы должны получить словарь.
-        # Забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса (привет,
+        # что и были переданы нам. В ответе мы должны получить словарь.
+
+        # Забираем отфильтрованные объекты, переопределяя метод get_context_data у наследуемого класса (привет,
         # полиморфизм, мы скучали!!!)
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)  # переопределяем набор аргументов класса
         # Вписываем наш фильтр в контекст
         context['filter'] = ProductFilter(self.request.GET, queryset=self.get_queryset())
         # добавляем категории в контекст
@@ -53,11 +59,13 @@ class ProductsList(ListView):
             pass
         # К словарю добавим текущую дату в ключ 'time_now'.
         context['time_now'] = datetime.now()
+        # после добавления тега 'current_time' передавать в контекст datetime.now() больше нет необходимости
+
         # Добавим ещё одну пустую переменную,
         # чтобы на её примере рассмотреть работу ещё одного фильтра.
         context['next_sale'] = None
         # context['next_sale'] = 'Wednesday Sale!'
-        # pprint(context)
+        # pprint(context)  # вывод всего содержимого объекта (context) в консоль
         pprint(context['view'])
         print(type(context['view']))
         return context
@@ -93,12 +101,17 @@ class ProductDetail(DetailView):
     model = Product
     # Используем другой шаблон — product_detail.html
     template_name = 'product_detail.html'
+
     # Название объекта, в котором будет выбранный пользователем продукт
     # context_object_name = 'product'
+
+    # Возвращает <Queryset> всех объектов модели, но зачем он здесь?
     # queryset = Product.objects.all()
+
     # Переименование ссылки на первичный ключ
     # pk_url_kwarg = 'id'
 
+    # замена для context_object_name = 'product' ?
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pprint(context)
@@ -146,9 +159,9 @@ class ProductDelete(DeleteView):
     model = Product
     success_url = '/products/'
 
-
-# В отличие от дженериков, которые мы уже знаем, код здесь надо писать самому, переопределяя типы запросов (например
-# гет или пост, вспоминаем реквесты из модуля C5)
+# Дженерик-заглушка для учебного шаблона 'product_list.html' (в проекте не используется)
+# В отличие от дженериков, которые мы уже знаем, код здесь надо писать самому, переопределяя типы запросов
+# (например get или post, вспоминаем реквесты из модуля C5)
 class Products(View):
 
     def get(self, request):

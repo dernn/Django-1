@@ -11,7 +11,7 @@ class Product(models.Model):
     description = models.TextField(
     )
     quantity = models.IntegerField(
-        validators=[MinValueValidator(0, 'Quantity should be >= 0')],
+        validators=[MinValueValidator(0, 'Quantity should be >= 0')],  # количество не может быть меньше 0
     )
     # поле категории будет ссылаться на модель категории
     category = models.ForeignKey(

@@ -10,4 +10,23 @@ class ProductForm(ModelForm):
     # делали что-то похожее с фильтрами.
     class Meta:
         model = Product
-        fields = ['name', 'price', 'quantity', 'category']
+        fields = ['name', 'price', 'quantity', 'category',
+                  # в юните D7.3 предлагают включать галочку в поля мета-класса, иначе она не будет отображаться,
+                  # однако на практике поле подтягивается из класса ProductForm и без этого
+                  # 'check_box',
+                  ]
+
+
+# 7.3.4 Простая форма с тремя полями (Django-формы)
+from django.forms import ModelForm, CharField, Textarea, EmailField, IntegerField
+from .models import Product
+
+
+class EduForm(ModelForm):
+    text = CharField(widget=Textarea, label='Text')
+    email = EmailField(label='Email')
+    integer = IntegerField(label='Integer')
+
+    class Meta:
+        model = Product
+        fields = ['text', 'email', 'integer']

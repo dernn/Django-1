@@ -26,7 +26,7 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name.title()}: {self.description[:20]} ({self.price})'
 
-    # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром
+    # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром (D7.4)
     def get_absolute_url(self):
         return f'/products/{self.id}'
 

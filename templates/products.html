@@ -13,6 +13,7 @@ Products
 
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
+   <!-- Перед таблицей добавим форму для поиска -->
    <form method="GET">
        <!-- Форму от фильтров за нас сделает Django. А вот кнопку, увы придётся делать самому -->
        {{ filter.form }}
@@ -54,8 +55,8 @@ Products
            product (context_object_name представления [view] ProductsList)
            — переменная цикла, т.е. наш товар полученный из списка -->
 
-           <!-- Поменяем products на filter.qs, т. к. теперь мы забираем
-           уже отобранную по каким-то параметрам информацию -->
+           <!-- Здесь уже заменили filter.qs обратно на products из-за некорректного вывода -->
+           <!-- см. ProductsList.get_queryset() -->
            {% for product in products %}
            <tr>
                <!-- Не забываем, что переменные в шаблоне ничем не отличаются
@@ -108,6 +109,7 @@ Products
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
                 <a>{{ num }}</a>
+            <!-- Выдаём +/- 1 страницу от текущей-->
             {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
                 <a href="?page={{ num }}">{{ num }}</a>
             {% endif %}
@@ -121,7 +123,7 @@ Products
 
     {% endif %}
 
-    <!-- «самопал» -->
+<!--    «самопал» -->
 <!--    <form method="POST">-->
 <!--        {% csrf_token %}-->
 <!--        <label for="quantity">Quantity</label>-->
@@ -133,7 +135,7 @@ Products
 <!--        <label for="price">Price</label>-->
 <!--        <input name="price" min="0">-->
 
-<!--        &lt;!&ndash; Здесь будет список категорий.  &ndash;&gt;-->
+<!--        Здесь будет список категорий.  -->
 <!--        <select name="category" size="{{ category|length }}">-->
 <!--            {% for category in categories %}-->
 <!--                <option value="{{ category.id }}">-->
@@ -142,6 +144,21 @@ Products
 <!--            {% endfor %}-->
 <!--        </select>-->
 <!--        <input type="submit" value="Add product">-->
+<!--    </form>-->
+
+<!--    Форма «из коробки» -->
+<!--    <form method="POST">-->
+<!--        {% csrf_token %}-->
+<!--        {{ form }} &lt;!&ndash; Теперь нам нужна только готовая форма и кнопка &ndash;&gt;-->
+<!--        <input type="submit" value="Добавить товар">-->
+<!--    </form>-->
+
+<!--    7.3.1 Простая форма с тремя полями (чистый HTML) -->
+<!--    <form method="POST">-->
+<!--        {% csrf_token %}-->
+<!--        <input type="text" name="text" id="fname">-->
+<!--        <input type="email" name="email">-->
+<!--        <input type="number" min="0">-->
 <!--    </form>-->
 
 {% endblock content %}

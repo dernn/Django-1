@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'fpages',
+    # python -m django-admin startproject simpleapp
     'simpleapp',  # Views & Templates D6
     'django_filters',  # Django-фильтры D7
 ]

@@ -1,4 +1,8 @@
-from django_filters import FilterSet  # импортируем filterset, чем-то напоминающий знакомые дженерики
+# python -m pip install django-filter
+# settings.py --> INSTALLED_APPS.append(filters.py)
+# и создать файл filters.py в директории simpleapp/
+
+from django_filters import FilterSet  # импортируем FilterSet, чем-то напоминающий знакомые дженерики
 from .models import Product
 
 

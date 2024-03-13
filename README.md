@@ -1,6 +1,9 @@
 # Django-1
-Django + flatpages (static)
+Study django draft-project
 
-Study django project for D1 module
+* Flatpages, Bootstrap<br>
+* Models, Views, Templates (MTV/MVC)<br>
+* Pagination, django_filters<br>
+* Django’s cache framework
 
 © 2022-2023

@@ -58,6 +58,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
+    # for D11.3: Filesystem caching
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -65,7 +70,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,3 +138,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+# for D11.3: Filesystem caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        # Указываем, куда будем сохранять кэшируемые файлы.
+        # Не забываем создать папку cache_files внутри папки с manage.py
+        'LOCATION': BASE_DIR / 'cache_files',
+        # Добавляем стандартное время ожидания в минуту (по умолчанию это 5 минут — 300 секунд)
+        'TIMEOUT': 60,
+    }
+}

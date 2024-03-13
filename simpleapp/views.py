@@ -18,10 +18,6 @@ class ProductsList(ListView):
     model = Product
     # Поле, которое будет использоваться для сортировки объектов
     ordering = '-price'
-    # Фильтр по цене + сортировка по имени
-    # queryset = Product.objects.filter(price__gt=100).order_by(
-    #     '-name'
-    # )
     # Указываем имя шаблона, в котором будут все инструкции о том,
     # как именно пользователю должны быть показаны наши объекты
     template_name = 'products.html'
@@ -30,23 +26,16 @@ class ProductsList(ListView):
     context_object_name = 'products'
     paginate_by = 2  # поставим постраничный вывод в один элемент
 
-    # form_class = ProductForm  # добавляем форм класс, чтобы получать доступ к форме через метод POST
-
     # Метод get_context_data позволяет нам изменить набор данных, который будет передан в шаблон.
     def get_context_data(self, **kwargs):
         # С помощью super() мы обращаемся к родительским классам
-        # и вызываем у них метод get_context_data с теми же аргументами,
-        # что и были переданы нам.
+        # и вызываем у них метод get_context_data с теми же аргументами, что и были переданы.
+
         # В ответе мы должны получить словарь.
-        # Забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса (привет,
-        # полиморфизм, мы скучали!!!)
+        # Забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса
         context = super().get_context_data(**kwargs)
         # Вписываем наш фильтр в контекст
         context['filter'] = ProductFilter(self.request.GET, queryset=self.get_queryset())
-        # добавляем категории в контекст
-        # context['categories'] = Category.objects.all()
-        # передаем форму в контекст
-        # context['form'] = ProductForm()
         try:
             context['parameter'] = context['filter'].data.urlencode()
         except AttributeError:
@@ -57,30 +46,7 @@ class ProductsList(ListView):
         # чтобы на её примере рассмотреть работу ещё одного фильтра.
         context['next_sale'] = None
         # context['next_sale'] = 'Wednesday Sale!'
-        # pprint(context)
-        pprint(context['view'])
-        print(type(context['view']))
         return context
-
-    # # переопределение метода отключаем за ненадобностью
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
-    #     if form.is_valid():  # если пользователь ввёл всё правильно и нигде не ошибся, то сохраняем новый товар
-    #         form.save()
-    #     return super().get(request, *args, **kwargs)
-
-    # # «самопал»
-    # def post(self, request, *args, **kwargs):
-    #     # берём значения для нового товара из POST-запроса, отправленного на сервер
-    #     name = request.POST['name']
-    #     quantity = request.POST['quantity']
-    #     category_id = request.POST['category']
-    #     price = request.POST['price']
-    #     description = '<content>'
-    #     # создаём новый товар и сохраняем
-    #     product = Product(name=name, quantity=quantity, category_id=category_id, price=price, description=description)
-    #     product.save()
-    #     return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос.
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -93,30 +59,20 @@ class ProductDetail(DetailView):
     model = Product
     # Используем другой шаблон — product_detail.html
     template_name = 'product_detail.html'
-    # Название объекта, в котором будет выбранный пользователем продукт
-    # context_object_name = 'product'
-    # queryset = Product.objects.all()
-    # Переименование ссылки на первичный ключ
-    # pk_url_kwarg = 'id'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pprint(context)
-        # pprint(ProductDetail)
         return context
 
 
-# дженерик для создания объекта. Надо указать только имя шаблона и класс формы, который мы написали в прошлом юните.
-# Остальное он сделает за вас
+# Дженерик для создания объекта.
+# Надо указать только имя шаблона и класс формы. Остальное он сделает за вас
 class ProductCreate(CreateView):
     template_name = 'product_create.html'
     form_class = ProductForm  # переносим форм класс, чтобы получать доступ к форме через метод POST
-    # context_object_name = 'create'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pprint(context)
-
         return context
 
 
@@ -133,9 +89,6 @@ class ProductUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pprint(context)
-        pprint(context['view'])
-        print(type(context['view']))
         return context
 
 

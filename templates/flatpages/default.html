@@ -1,20 +1,25 @@
 <!-- Core (default) template-->
 <!DOCTYPE html>
+
+{% load cache %} <!-- Загружаем кэширование -->
+
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>{% block title %} {{ flatpage.title }} {% endblock title %}</title>
-        <!-- Favicon-->
-        <!-- Load 'static' from settings.staticfiles_dirs (относительный путь)-->
-        {% load static %}
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <!-- {% static '<dir/file_name>' %} : вызов файлов по ссылке -->
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    </head>
+    {% cache 30 header %} <!-- Кэшируем отдельный блок на 30 секунд -->
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta name="description" content="" />
+            <meta name="author" content="" />
+            <title>{% block title %} {{ flatpage.title }} {% endblock title %}</title>
+            <!-- Favicon-->
+            <!-- Load 'static' from settings.staticfiles_dirs (относительный путь)-->
+            {% load static %}
+            <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+            <!-- Core theme CSS (includes Bootstrap)-->
+            <!-- {% static '<dir/file_name>' %} : вызов файлов по ссылке -->
+            <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        </head>
+    {% endcache %}
     <body>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

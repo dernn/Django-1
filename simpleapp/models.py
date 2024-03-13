@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -29,6 +30,11 @@ class Product(models.Model):
     # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром (D7.4)
     def get_absolute_url(self):
         return f'/products/{self.id}'
+
+    # for D11.4: переопределяем метод сохранения модели
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'product-{self.pk}')  # затем удаляем его из кэша, чтобы сбросить его
 
 
 # Категория, к которой будет привязываться товар

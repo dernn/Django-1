@@ -1,13 +1,11 @@
 from datetime import datetime
 
+from django.core.cache import cache  # импортируем наш кэш
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Product
 from pprint import pprint
 
 # from D7
-from django.shortcuts import render
-from django.views import View  # импортируем простую вьюшку
-from django.core.paginator import Paginator  # импортируем класс, позволяющий удобно осуществлять постраничный вывод
 from .filters import ProductFilter  # импортируем недавно написанный фильтр (D7.2)
 from .forms import ProductForm  # импортируем нашу форму (D7.3)
 
@@ -75,6 +73,20 @@ class ProductDetail(DetailView):
         context = super().get_context_data(**kwargs)
         pprint(context)
         return context
+
+    # for D11.4: The low-level cache API
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта
+        obj = cache.get(f'product-{self.kwargs["pk"]}',
+                        None)
+        # Кэш очень похож на словарь, и метод get действует так же.
+        # Он забирает значение по ключу, а если его нет, то забирает None.
+
+        # Если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'product-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 # Дженерик для создания объекта.

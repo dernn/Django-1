@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # python -m django-admin startproject simpleapp
     'simpleapp',  # Views & Templates D6
     'django_filters',  # Django-фильтры D7
+    'basic',  # localization [D17]
 ]
 
 SITE_ID = 1

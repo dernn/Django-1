@@ -19,7 +19,7 @@ class ProductsList(ListView):
 
     # Указываем имя шаблона, в котором будут все инструкции о том,
     # как именно пользователю должны быть показаны наши объекты
-    template_name = 'products.html'
+    template_name = 'simpleapp/products.html'
 
     # Это имя списка, в котором будут лежать все объекты ('products').
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
@@ -66,7 +66,7 @@ class ProductDetail(DetailView):
     # Модель всё та же, но мы хотим получать информацию по отдельному товару
     model = Product
     # Используем другой шаблон — product_detail.html
-    template_name = 'product_detail.html'
+    template_name = 'simpleapp/product_detail.html'
 
     # здесь context_object_name уже 'product' [см. pprint(context)]
     def get_context_data(self, **kwargs):
@@ -93,7 +93,7 @@ class ProductDetail(DetailView):
 # Надо указать только имя шаблона и класс формы, который мы
 # написали в прошлом юните (D7.3). Остальное он сделает за нас.
 class ProductCreate(CreateView):
-    template_name = 'product_create.html'
+    template_name = 'simpleapp/product_create.html'
     form_class = ProductForm  # передаём модельную форму в атрибут, чтобы получать доступ к форме через метод POST
 
     # здесь context_object_name уже 'form' [см. pprint(context)]
@@ -105,7 +105,7 @@ class ProductCreate(CreateView):
 
 # дженерик для редактирования объекта
 class ProductUpdate(UpdateView):
-    template_name = 'product_create.html'
+    template_name = 'simpleapp/product_create.html'
     form_class = ProductForm
 
     # метод get_object мы используем вместо queryset, чтобы получить информацию об объекте,
@@ -122,7 +122,7 @@ class ProductUpdate(UpdateView):
 
 # дженерик для удаления товара
 class ProductDelete(DeleteView):
-    template_name = 'product_delete.html'
+    template_name = 'simpleapp/product_delete.html'
     queryset = Product.objects.all()
     model = Product
     success_url = '/products/'

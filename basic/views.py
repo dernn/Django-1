@@ -10,7 +10,8 @@ class Index(View):
         string = _('Hello world')
 
         context = {
-            'string': string
+            'string': string,
+            'available_languages': ['en', 'ru'],
         }
 
         return HttpResponse(render(request, 'basic/index.html', context))

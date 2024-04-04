@@ -15,8 +15,7 @@
 
         <select name="language" id="">
             {% get_current_language as LANGUAGE_CODE %} <!-- set current language -->
-            {% get_available_languages as LANGUAGES %} <!-- получаем языки [list of tuples] -->
-            {% get_language_info_list for LANGUAGES as languages %} <!-- Помещаем их в список languages -->
+            {% get_language_info_list for available_languages as languages %} <!-- Помещаем их в список languages -->
 
             <!-- Итерируем список и выводим их название на языке пользователя и код языка -->
             {% for language in languages %}

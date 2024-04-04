@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include  # < вот тут подключаем представления
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),  # подключаем встроенные эндпоинты для работы с локализацией
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
     # Делаем так, чтобы все адреса из нашего приложения (simpleapp/urls.py)

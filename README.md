@@ -5,5 +5,8 @@ Study django draft-project
 * Models, Views, Templates (MTV/MVC)<br>
 * Pagination, django_filters<br>
 * Django’s cache framework
+* Localization
+* Docker
+* Nginx
 
-© 2022-2023
+© 2022-2024

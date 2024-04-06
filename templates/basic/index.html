@@ -27,7 +27,11 @@
         <input type="submit" value="set">
     </form>
 
-    {{ string }}! <!-- Переменная с getter'а вьюхи Index [basic.views] -->
-    {% trans "Check out my new cool translation" %}! <!-- Переводим строку -->
+    <!-- Вывод всех объектов модели из вьюхи -->
+    {% for model in models %}
+    <div class="model-class">
+        {{ model.name }} : {{ model.kind.name }}
+    </div>
+    {% endfor %}
 </body>
 </html>

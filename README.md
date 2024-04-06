@@ -5,7 +5,7 @@ Study django draft-project
 * Models, Views, Templates (MTV/MVC)<br>
 * Pagination, django_filters<br>
 * Django’s cache framework
-* Localization
+* Localization [basic app]
 * Docker
 * Nginx
 

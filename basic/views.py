@@ -1,16 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
-# импортируем функцию для перевода
-from django.utils.translation import gettext as _
+from basic.models import MyModel
 
 
 class Index(View):
     def get(self, request):
-        string = _('Hello world')
+        # Translators: This message appears on the home page only
+        models = MyModel.objects.all()
 
         context = {
-            'string': string,
+            # передаём всё объекты модели в контекст
+            'models': models,
             'available_languages': ['en', 'ru'],
         }
 

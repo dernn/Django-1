@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    'basic.middlewares.TimezoneMiddleware',  # add custom timezone middleware!
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Site cache off [D11.3]
 ]

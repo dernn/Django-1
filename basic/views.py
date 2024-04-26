@@ -18,7 +18,7 @@ class Index(View):
             # передаём всё объекты модели в контекст
             'models': models,
             'available_languages': ['en', 'ru'],
-            'current_time': timezone.now(),
+            'current_time': timezone.localtime(),  # returns datetime in the selected time zone
             'timezones': pytz.common_timezones  # добавляем все доступные часовые пояса
         }
 
